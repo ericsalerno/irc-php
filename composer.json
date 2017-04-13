@@ -27,8 +27,8 @@
   "require-dev":{
     "phpunit/phpunit": "5.7"
   },
-  "autload":{
-    "psr4": {
+  "autoload":{
+    "psr-4": {
       "SalernoLabs\\IRC\\": "src/",
       "SalernoLabs\\Tests\\IRC\\": "tests/"
     }

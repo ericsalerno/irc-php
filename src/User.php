@@ -55,28 +55,38 @@ class User
      */
     public function __construct($userString = null)
     {
-        if (!empty($userString))
+        if (empty($userString))
         {
-            $userSegments = array();
-            preg_match('#:(.*?)\!(.*?)\@(.*)#', $userString, $userSegments);
-
-            if (!empty($userSegments[1]))
-            {
-                $this->nickName = $userSegments[1];
-            }
-
-            if (!empty($userSegments[2]))
-            {
-                $this->name = $userSegments[2];
-
-                if ($this->name[0] != '~') $this->isIdented = true;
-            }
-
-            if (!empty($userSegments[3]))
-            {
-                $this->host = $userSegments[3];
-            }
+            throw new \Exception("No user string specified!");
         }
+
+        $userSegments = array();
+        preg_match('#:?(.*?)\!(.*?)\@(.*)#', $userString, $userSegments);
+
+        if (empty($userSegments))
+        {
+            throw new \Exception("Invalid user string specified: '" . $userString . "'");
+        }
+
+        if (count($userSegments) != 4)
+        {
+            throw new \Exception("Failed to properly parse user string: '" . $userString . "'");
+        }
+
+        $this->nickName = $userSegments[1];
+        $this->name = $userSegments[2];
+
+        if ($this->name[0] == '~')
+        {
+            $this->isIdented = false;
+            $this->name = mb_substr($this->name, 1);
+        }
+        else
+        {
+            $this->isIdented = true;
+        }
+
+        $this->host = $userSegments[3];
     }
 
     /**
@@ -108,7 +118,7 @@ class User
      */
     public function __toString()
     {
-        return $this->nickName . '!' . $this->name . '@' . $this->host;
+        return $this->nickName . '!' . ($this->isIdented == false ? '~' : '') . $this->name . '@' . $this->host;
     }
 
 }
