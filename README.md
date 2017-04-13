@@ -5,7 +5,7 @@ The idea would be to make an event based Bot class that you can extend to add yo
 
 ## Usage
 
-You can use the bot by including ericsalerno/irc-php with composer (when its in packagist, not yet) and activating it like this.
+You can use the bot by including salernolabs/irc-php with composer (when its in packagist, not yet) and activating it like this.
 
     $bot = new \SalernoLabs\IRC\Bot();
     
