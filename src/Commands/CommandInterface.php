@@ -6,18 +6,18 @@
  * @subpackage IRC
  * @author Eric Salerno
  */
-namespace EricSalerno\IRC\Commands;
+namespace SalernoLabs\IRC\Commands;
 
 interface CommandInterface
 {
     /**
      * Execute the command
      *
-     * @param \EricSalerno\IRC\Bot $bot
-     * @param \EricSalerno\IRC\User $user
+     * @param \SalernoLabs\IRC\Bot $bot
+     * @param \SalernoLabs\IRC\User $user
      * @param $channel
      * @param $parameters
      * @return mixed
      */
-    public function execute(\EricSalerno\IRC\Bot $bot, \EricSalerno\IRC\User $user, $channel, $parameters);
+    public function execute(\SalernoLabs\IRC\Bot $bot, \SalernoLabs\IRC\User $user, $channel, $parameters);
 }

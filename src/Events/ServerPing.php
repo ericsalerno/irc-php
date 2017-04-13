@@ -6,15 +6,15 @@
  * @subpackage IRC
  * @author Eric Salerno
  */
-namespace EricSalerno\IRC\Events;
+namespace SalernoLabs\IRC\Events;
 
 class ServerPing implements EventInterface
 {
     /**
-     * @param \EricSalerno\IRC\Bot $bot
+     * @param \SalernoLabs\IRC\Bot $bot
      * @param array $parameters
      */
-    public function execute(\EricSalerno\IRC\Bot $bot, $parameters = [])
+    public function execute(\SalernoLabs\IRC\Bot $bot, $parameters = [])
     {
         $bot->sendRawCommand('PONG', $parameters);
     }

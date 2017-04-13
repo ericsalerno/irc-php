@@ -4,11 +4,11 @@
  *
  * This is meant to be run from the command line.
  * 
- * @package EricSalerno
+ * @package SalernoLabs
  * @subpackage IRC
  * @author Eric Salerno
  */
-namespace EricSalerno\IRC;
+namespace SalernoLabs\IRC;
 
 class Bot
 {
@@ -25,7 +25,7 @@ class Bot
     /**
      * In case you want to change the class of the User type
      */
-    const USER_CLASS_NAME = '\EricSalerno\IRC\User';
+    const USER_CLASS_NAME = '\SalernoLabs\IRC\User';
 
     /**
      * Op code to function mapping events

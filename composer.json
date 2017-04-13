@@ -1,12 +1,12 @@
 {
-  "name": "ericsalerno/irc-php",
+  "name": "salernolabs/irc-php",
   "description": "Simple event based irc bot written in PHP for fun.",
   "keywords": [
     "PHP",
     "IRC",
     "Bot"
   ],
-  "homepage": "http://www.ericsalerno.com/",
+  "homepage": "http://www.salernolabs.com/",
   "license": "MIT",
   "authors": [
     {
@@ -29,8 +29,8 @@
   },
   "autload":{
     "psr4": {
-      "EricSalerno\\IRC\\": "src/",
-      "EricSalerno\\Tests\\IRC\\": "tests/"
+      "SalernoLabs\\IRC\\": "src/",
+      "SalernoLabs\\Tests\\IRC\\": "tests/"
     }
   }
 }

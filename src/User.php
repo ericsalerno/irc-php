@@ -5,11 +5,11 @@
  * Should make parsing and dealing with irc style user classes easier. Use the
  * getUser static method to take advantage of caching out the preg_match.
  *
- * @package EricSalerno
+ * @package SalernoLabs
  * @subpackage IRC
  * @author Eric Salerno
  */
-namespace EricSalerno\IRC;
+namespace SalernoLabs\IRC;
 
 class User
 {

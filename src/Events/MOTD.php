@@ -1,10 +1,10 @@
 <?php
 
-namespace EricSalerno\IRC\Events;
+namespace SalernoLabs\IRC\Events;
 
 class MOTD implements EventInterface
 {
-    public function execute(\EricSalerno\IRC\Bot $bot, $parameters = [])
+    public function execute(\SalernoLabs\IRC\Bot $bot, $parameters = [])
     {
 
     }
