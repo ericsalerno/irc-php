@@ -20,6 +20,6 @@ class ServerVersion implements CommandInterface
      */
     public function execute(\SalernoLabs\IRC\Bot $bot, \SalernoLabs\IRC\User $user, $channel, $parameters)
     {
-        $bot->sendMessage("I'm running version IDUNNO.WUT of ericsalerno/irc-php!", $channel);
+        $bot->sendMessage("I'm an instance of salernolabs/slzbot-irc, fork me on github https://github.com/ericsalerno/slzbot-irc", $channel);
     }
 }

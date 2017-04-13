@@ -43,3 +43,13 @@ You can also bind commands to your bot so that it can listen for user requests. 
 This would make the bot listen for users to say "!uptime" and then it would execute the code within the class. In this case it would just say how long it was since the class was instantiated.
 
 The command class must implement the \SalernoLabs\IRC\Commands\CommandInterface interface to work so feel free to create them in your project. You can also change the activation character from the default of '!' with setCommandActivationCharacter.
+
+## Sample
+
+You can run a quick sample with the included generic bot. From the command line and assuming you are in the project's directory:
+
+    /path/to/php samples/generic/bot.php nickname #channel irc.yourservername
+
+The generic bot expects several parameters. Run it without parameters to get usage info.
+
+    Usage: php samples/generic/bot.php <nickname> <channel> <server> [port]
