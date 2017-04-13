@@ -33,6 +33,26 @@ class BotTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * Test the bot event execute
+     *
+     * @throws \Exception
+     * @covers \SalernoLabs\IRC\Bot::executeEvent
+     */
+    public function testBotEventExecute()
+    {
+        $bot = new \SalernoLabs\IRC\Bot();
+        $bot
+            ->setUser('testUser', 'sausage')
+            ->setServer('file://' . __DIR__ . '/../tests/data/test-server.txt', 6667)
+            ->addOpCodeEvent(\SalernoLabs\IRC\OpCodes::EVENT_READY, new Mocks\OnConnect())
+            ->setDebug(true);
+
+        $this->expectOutputRegex('#PRIVMSG \#phpirc :Super Test Message#');
+
+        $bot->connect();
+    }
+
+    /**
      * @param $nickName
      * @param $realName
      * @throws \Exception
