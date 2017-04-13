@@ -1,0 +1,7 @@
+:localhost NOTICE * :*** Looking up your hostname
+:localhost NOTICE * :*** Checking Ident
+:localhost NOTICE * :*** Found your hostname
+:localhost 001 testUser :Welcome to the pseudo-server
+:localhost 002 testUser :Your host is localhost[127.0.0.1/6667], running version test-server.txt
+:localhost 003 testUser :This server was created Tue Jan 8 2013 at 10:19:17 EST
+:localhost 376 testUser :End of /MOTD command.

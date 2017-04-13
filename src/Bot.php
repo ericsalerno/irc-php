@@ -28,6 +28,11 @@ class Bot
     const USER_CLASS_NAME = '\SalernoLabs\IRC\User';
 
     /**
+     * A string to identify this client
+     */
+    const CLIENT_NAME = 'PHPIRCBot';
+
+    /**
      * Op code to function mapping events
      *
      * @see http://tools.ietf.org/html/rfc1459.html#section-6
@@ -120,13 +125,6 @@ class Bot
     private $useSSL = false;
 
     /**
-     * Channels to join on load
-     *
-     * @var string[]
-     */
-    private $channels = [];
-
-    /**
      * Debug mode
      *
      * @var boolean
@@ -151,8 +149,8 @@ class Bot
         ini_set('display_errors', 'on');
 
         //Add default MOTD event handler
-        $this->opCodeEvents[376] = new Events\MOTD();
-        $this->opCodeEvents['PING'] = new Events\ServerPing();
+        $this->opCodeEvents[OpCodes::IRC_END_OF_MOTD] = new Events\MOTD();
+        $this->opCodeEvents[OpCodes::EVENT_PING] = new Events\ServerPing();
 
         //Add default !sv command handler
         $this->commands['sv'] = new Commands\ServerVersion();
@@ -225,20 +223,7 @@ class Bot
     }
 
     /**
-     * Set autojoin channels
-     *
-     * @param array $channels
-     * @return $this
-     */
-    public function setAutojoinChannels($channels = [])
-    {
-        $this->channels = $channels;
-
-        return $this;
-    }
-
-    /**
-     * Add op code event
+     * Add op code event. You can bind multiple events to a single opcode.
      *
      * @param $opCode
      * @param Events\EventInterface $event
@@ -252,7 +237,18 @@ class Bot
             throw new \Exception("Can not bind empty opcode!");
         }
 
-        $this->opCodeEvents[$opCode] = $event;
+        if (!empty($this->opCodeEvents[$opCode]))
+        {
+            if (!is_array($this->opCodeEvents[$opCode]))
+            {
+                $this->opCodeEvents[$opCode] = [$this->opCodeEvents[$opCode]];
+            }
+            $this->opCodeEvents[$opCode][] = $event;
+        }
+        else
+        {
+            $this->opCodeEvents[$opCode] = $event;
+        }
 
         return $this;
     }
@@ -281,13 +277,29 @@ class Bot
     {
         $server = $this->server;
 
+        if (empty($server))
+        {
+            throw new \Exception("Invalid server specified.");
+        }
+
         if ($this->useSSL)
         {
             $server = 'ssl://' . $server;
         }
 
-        $this->debugMessage("Connecting to " . $server . ':' . $this->port . '...');
-        $this->socket = @fsockopen($server, $this->port);
+
+        if (substr($server, 0, 7) == 'file://')
+        {
+            $server = substr($server, 7);
+            $this->debugMessage("Opening file " . $server . '...');
+
+            $this->socket = @fopen($server, 'r');
+        }
+        else
+        {
+            $this->debugMessage("Connecting to " . $server . ':' . $this->port . '...');
+            $this->socket = @fsockopen($server, $this->port);
+        }
 
         if (empty($this->socket))
         {
@@ -297,8 +309,10 @@ class Bot
 
         $this->debugMessage("Connected! Logging in...");
 
-        $this->sendRawCommand('USER', $this->nickname . ' PHPIRCBot ' . $this->nickname . ' :' . $this->realName);
+        $this->sendRawCommand('USER', $this->nickname . ' ' . static::CLIENT_NAME . ' ' . $this->nickname . ' :' . $this->realName);
         $this->sendRawCommand('NICK', $this->nickname);
+
+        $this->executeEvent(OpCodes::EVENT_CONNECTED);
 
         do
         {
@@ -316,12 +330,12 @@ class Bot
      */
     private function mainLoop()
     {
-        if (feof($this->socket))
+        if (empty($this->socket) || feof($this->socket))
         {
             $this->debugMessage("Disconnected!");
             $this->socket = null;
 
-            $this->onServerDisconnect();
+            $this->executeEvent(OpCodes::EVENT_DISCONNECT);
             return;
         }
 
@@ -336,9 +350,9 @@ class Bot
         $serverResponseSegments = explode(' ', $data);
 
         //First check for ping-pong
-        if ($serverResponseSegments[0] == 'PING')
+        if ($serverResponseSegments[0] == OpCodes::EVENT_PING)
         {
-            $this->executeEvent('PING', $serverResponseSegments[1]);
+            $this->executeEvent(OpCodes::EVENT_PING, $serverResponseSegments[1]);
             return;
         }
 
@@ -351,6 +365,11 @@ class Bot
         //Check to see if we have an opcode bound to a specific method
         if ($this->executeEvent($serverResponseSegments[1], $serverResponseSegments))
         {
+            if ($serverResponseSegments[1] == OpCodes::IRC_END_OF_MOTD)
+            {
+                $this->executeEvent(OpCodes::EVENT_READY);
+            }
+
             return;
         }
 
@@ -361,7 +380,7 @@ class Bot
 
         //No overridden op code, not a pong, lets carry on as if its a chat event
         //First check for bound commands, if not do the chat callback
-        if ($serverResponseSegments[1] == 'PRIVMSG')
+        if ($serverResponseSegments[1] == OpCodes::EVENT_PRIVATE_MESSAGE)
         {
             //First build the user from the configurable user class
             $user = call_user_func_array([static::USER_CLASS_NAME, 'getUser'], [$serverResponseSegments[0]]);
@@ -407,7 +426,7 @@ class Bot
      *
      * @return boolean
      */
-    private function executeCommand($user, $channel, $command, $parameters)
+    public function executeCommand($user, $channel, $command, $parameters)
     {
         //Trim off leading colon
         if ($command[0] == ':')
@@ -438,15 +457,27 @@ class Bot
      * @param $parameters
      * @return bool
      */
-    private function executeEvent($eventCode, $parameters)
+    public function executeEvent($eventCode, $parameters = [])
     {
-        if (empty($this->opCodeEvents[$eventCode]) ||
-            !($this->opCodeEvents[$eventCode] instanceof Events\EventInterface))
+        if (empty($this->opCodeEvents[$eventCode]))
         {
             return false;
         }
 
-        $this->opCodeEvents[$eventCode]->execute($this, $parameters);
+        if (is_array($this->opCodeEvents[$eventCode]))
+        {
+            foreach ($this->opCodeEvents[$eventCode] as $event)
+            {
+                /**
+                 * @var Events\EventInterface $event
+                 */
+                $event->execute($this, $parameters);
+            }
+        }
+        else
+        {
+            $this->opCodeEvents[$eventCode]->execute($this, $parameters);
+        }
 
         return $this;
     }
@@ -460,15 +491,7 @@ class Bot
      */
     protected function handleChatMessage(User $user, $channel, $text)
     {
-        $this->debugMessage('#' . $channel . ' <' . $user->nickname . '> ' . $text);
-    }
-
-    /**
-     * On disconnect function for server termination
-     */
-    protected function onServerDisconnect()
-    {
-        $this->debugMessage('Disconnecting...');
+        $this->debugMessage('#' . $channel . ' <' . $user->nickName . '> ' . $text);
     }
 
     /**
