@@ -279,6 +279,8 @@ class Bot
         }
 
         $this->commands[$commandText] = $command;
+
+        return $this;
     }
 
     /**

@@ -1,6 +1,10 @@
 <?php
 /**
  * On Join Event
+ *
+ * @package SalernoLabs
+ * @subpackage Tests
+ * @author Eric Salerno
  */
 namespace SalernoLabs\Tests\IRC\Mocks;
 
