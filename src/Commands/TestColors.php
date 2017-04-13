@@ -2,7 +2,7 @@
 /**
  * Perform the Test Colors Command
  *
- * @package EricSalerno
+ * @package SalernoLabs
  * @subpackage IRC
  * @author Eric Salerno
  */

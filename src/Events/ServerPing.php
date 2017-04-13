@@ -2,7 +2,7 @@
 /**
  * Server Ping Event
  *
- * @package EricSalerno
+ * @package SalernoLabs
  * @subpackage IRC
  * @author Eric Salerno
  */

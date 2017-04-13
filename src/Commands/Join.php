@@ -2,7 +2,7 @@
 /**
  * Perform the Uptime Command
  *
- * @package EricSalerno
+ * @package SalernoLabs
  * @subpackage IRC
  * @author Eric
  */

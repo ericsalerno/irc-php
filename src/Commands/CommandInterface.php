@@ -2,7 +2,7 @@
 /**
  * Command Interface for Adding Commands to the Bot
  *
- * @package EricSalerno
+ * @package SalernoLabs
  * @subpackage IRC
  * @author Eric Salerno
  */

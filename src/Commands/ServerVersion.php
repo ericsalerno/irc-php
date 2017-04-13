@@ -1,8 +1,8 @@
 <?php
 /**
- * Perform the Server Version Command
+ * Perform the Server Version Command. It occurs to me that !sv probably doesn't mean "ServerVersion" but whatevs.
  *
- * @package EricSalerno
+ * @package SalernoLabs
  * @subpackage IRC
  * @author Eric
  */
