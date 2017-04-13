@@ -4,6 +4,8 @@ For fun and practice, I'm throwing together a super simple PHP based irc bot tha
 
 The idea would be to make an event based Bot class that you can extend to add your own business logic to.
 
+I hope it should go without saying, but __never run this bot as root__!
+
 ## Usage
 
 You can use the bot by including salernolabs/slzbot-irc with composer and activating it like this.
