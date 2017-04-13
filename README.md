@@ -1,17 +1,45 @@
-# irc-php
-For fun and practice, I'm throwing together a super simple irc bot.
+# slzbot-irc
+
+For fun and practice, I'm throwing together a super simple PHP based irc bot that runs from the command line (or a container).
 
 The idea would be to make an event based Bot class that you can extend to add your own business logic to.
 
 ## Usage
 
-You can use the bot by including salernolabs/irc-php with composer (when its in packagist, not yet) and activating it like this.
+You can use the bot by including salernolabs/slzbot-irc with composer (when its in packagist, not yet) and activating it like this.
 
     $bot = new \SalernoLabs\IRC\Bot();
     
     $bot
-        ->setServer('irc.efnet.org', 6667, false)
+        ->setServer('irc.efnet.org', 6667)
         ->setChannels('#ircphp')
-        ->setUser('ircphpbot', 'IRC PHP')
+        ->setUser('myBotNickname', 'SlzBot')
+           //any events and commands you want to bind can go here
         ->connect();
         
+## Events
+
+You can bind and respond to events that occur from the server. You can bind multiple event executors to a single event. For example, 376 is the IRC op code for the end of the MOTD. You can bind an event to autojoin channels like this.
+
+    $autoJoins = new \SalernoLabs\IRC\Events\AutoJoin();
+    $autoJoins->setAutoJoins(['#programming', '#irc', '#php']);
+
+    $bot
+       ->addOpCodeEvent(376, $autoJoins)
+
+There are some op codes and other events that Slzbot listens for in the \SalernoLabs\IRC\OpCodes class.
+
+The event class must implement the \SalernoLabs\IRC\Events\EventInterface interface to work so feel free to create them in your project.
+
+## Commands
+
+You can also bind commands to your bot so that it can listen for user requests. For example if a user types !uptime and you want to listen for that keyword, you can do something like this:
+
+    $command = new \SalernoLabs\IRC\Commands\Uptime();
+
+    $bot
+        ->addCommand('uptime', $command);
+
+This would make the bot listen for users to say "!uptime" and then it would execute the code within the class. In this case it would just say how long it was since the class was instantiated.
+
+The command class must implement the \SalernoLabs\IRC\Commands\CommandInterface interface to work so feel free to create them in your project. You can also change the activation character from the default of '!' with setCommandActivationCharacter.

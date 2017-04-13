@@ -1,9 +1,7 @@
 <?php
 /**
- * The main bot class, you can run this directly or extend it and add event handlers.
+ * The main Slzbot class, you can run this directly or extend it and add event handlers.
  *
- * This is meant to be run from the command line.
- * 
  * @package SalernoLabs
  * @subpackage IRC
  * @author Eric Salerno
@@ -94,7 +92,7 @@ class Bot
      *
      * @var string
      */
-    private $server = 'irc.efnet.org';
+    private $server = '';
 
     /**
      * Server port
@@ -218,6 +216,19 @@ class Bot
     public function setDebug($debugMode)
     {
         $this->debug = $debugMode;
+
+        return $this;
+    }
+
+    /**
+     * Set command activation character
+     *
+     * @param string $activationCharacterr
+     * @return $this
+     */
+    public function setCommandActivationCharacter($activationCharacterr = '!')
+    {
+        $this->activationCharacter = $activationCharacterr;
 
         return $this;
     }
