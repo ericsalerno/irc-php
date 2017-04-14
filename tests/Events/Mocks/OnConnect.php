@@ -6,7 +6,7 @@
  * @subpackage Tests
  * @author Eric Salerno
  */
-namespace SalernoLabs\Tests\IRC\Mocks;
+namespace SalernoLabs\Tests\IRC\Events\Mocks;
 
 class OnConnect implements \SalernoLabs\IRC\Events\EventInterface
 {
