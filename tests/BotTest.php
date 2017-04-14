@@ -91,25 +91,4 @@ class BotTest extends \PHPUnit\Framework\TestCase
         return $output;
     }
 
-    /**
-     * @param $nickName
-     * @param $realName
-     * @throws \Exception
-     * @covers \SalernoLabs\IRC\Bot::addOpCodeEvent
-     * @covers \SalernoLabs\IRC\Events\AutoJoin::execute
-     * @covers \SalernoLabs\IRC\Bot::executeEvent
-     */
-    public function testBotCommands()
-    {
-        $bot = new \SalernoLabs\IRC\Bot();
-        $bot
-            ->setUser('testUser', 'sausage')
-            ->setServer('file://' . __DIR__ . '/../tests/data/test-server-command.txt', 6667)
-            ->addCommand('uptime', new Mocks\TestCommand())
-            ->setDebug(true);
-
-        $this->expectOutputRegex('/Hello superman this is a test message!/');
-
-        $bot->connect();
-    }
 }

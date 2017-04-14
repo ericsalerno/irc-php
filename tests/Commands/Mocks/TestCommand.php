@@ -6,7 +6,7 @@
  * @subpackage Tests
  * @author Eric Salerno
  */
-namespace SalernoLabs\Tests\IRC\Mocks;
+namespace SalernoLabs\Tests\IRC\Commands\Mocks;
 
 class TestCommand implements \SalernoLabs\IRC\Commands\CommandInterface
 {

@@ -1,0 +1,2 @@
+:localhost 376 testUser :End of /MOTD command.
+:superman!clark@kent.com PRIVMSG testUser :!say hello world
