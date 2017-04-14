@@ -59,3 +59,4 @@ You can run a quick sample with the included generic bot. From the command line 
 The generic bot expects several parameters. Run it without parameters to get usage info.
 
     Usage: php samples/generic/bot.php <nickname> <channel> <server> [port]
+
