@@ -355,6 +355,8 @@ class Bot
         //Get one line of data of SOCKET_READ_BYTES length
         $data = trim(@fgets($this->socket, static::SOCKET_READ_BYTES));
 
+        if (empty($data)) return;
+
         $this->debugMessage($data);
 
         //Flush system output buffer
@@ -371,7 +373,7 @@ class Bot
 
         if (empty($serverResponseSegments[1]))
         {
-            $this->debugMessage("No op code could be found in server response.");
+            $this->debugMessage("No op code could be found in server response: " . $data);
             return;
         }
 
