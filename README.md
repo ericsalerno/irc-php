@@ -8,6 +8,10 @@ I hope it should go without saying, but __never run this bot as root__!
 
 ## Usage
 
+Include the library in your project with composer.
+
+    composer require ericsalerno/slzbot-irc
+
 You can use the bot by including salernolabs/slzbot-irc with composer and activating it like this.
 
     $bot = new \SalernoLabs\IRC\Bot();

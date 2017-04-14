@@ -1,5 +1,5 @@
 {
-  "name": "salernolabs/slzbot-irc",
+  "name": "ericsalerno/slzbot-irc",
   "description": "Simple event based irc bot written in PHP for fun.",
   "keywords": [
     "PHP",
