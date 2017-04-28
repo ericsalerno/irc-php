@@ -2,7 +2,7 @@
 /**
  * The sample expects some command line arguments and will add all the commands available
  *
- * @package SalernoLabs
+ * @package SlzBot
  * @subpackage IRC
  * @author Eric Salerno
  */
@@ -19,19 +19,19 @@ $channel = $argv[2];
 $server = $argv[3];
 $port = !empty($argv[4]) ? $argv[4] : 6667;
 
-$autojoin = new \SalernoLabs\IRC\Events\AutoJoin();
+$autojoin = new \SlzBot\IRC\Events\AutoJoin();
 $autojoin->setAutoJoins($channel);
 
-$bot = new \SalernoLabs\IRC\Bot();
+$bot = new \SlzBot\IRC\Bot();
 
 $bot->setUser($nickname, 'SlzBot')
     ->setServer($server, $port)
-    ->addOpCodeEvent(\SalernoLabs\IRC\OpCodes::EVENT_READY, $autojoin)
-    ->addCommand('join', new \SalernoLabs\IRC\Commands\Join())
-    ->addCommand('part', new \SalernoLabs\IRC\Commands\Part())
-    ->addCommand('quit', new \SalernoLabs\IRC\Commands\Quit())
-    ->addCommand('say', new \SalernoLabs\IRC\Commands\Say())
-    ->addCommand('hello', new \SalernoLabs\IRC\Commands\TestColors())
-    ->addCommand('uptime', new \SalernoLabs\IRC\Commands\Uptime())
+    ->addOpCodeEvent(\SlzBot\IRC\OpCodes::EVENT_READY, $autojoin)
+    ->addCommand('join', new \SlzBot\IRC\Commands\Join())
+    ->addCommand('part', new \SlzBot\IRC\Commands\Part())
+    ->addCommand('quit', new \SlzBot\IRC\Commands\Quit())
+    ->addCommand('say', new \SlzBot\IRC\Commands\Say())
+    ->addCommand('hello', new \SlzBot\IRC\Commands\TestColors())
+    ->addCommand('uptime', new \SlzBot\IRC\Commands\Uptime())
     ->setDebug(true)
     ->connect();

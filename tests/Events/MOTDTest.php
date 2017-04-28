@@ -2,27 +2,27 @@
 /**
  * MOTD Tests
  *
- * @package SalernoLabs
+ * @package SlzBot
  * @subpackage Tests
  * @author Eric Salerno
  */
-namespace SalernoLabs\Tests\IRC\Events;
+namespace SlzBot\Tests\IRC\Events;
 
 class MOTDTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @throws \Exception
-     * @covers \SalernoLabs\IRC\Bot::addOpCodeEvent
-     * @covers \SalernoLabs\IRC\Events\AutoJoin::execute
-     * @covers \SalernoLabs\IRC\Bot::executeEvent
+     * @covers \SlzBot\IRC\Bot::addOpCodeEvent
+     * @covers \SlzBot\IRC\Events\AutoJoin::execute
+     * @covers \SlzBot\IRC\Bot::executeEvent
      */
     public function testBotAutojoin()
     {
-        $bot = new \SalernoLabs\IRC\Bot();
+        $bot = new \SlzBot\IRC\Bot();
         $bot
             ->setUser('testUser', 'sausage')
             ->setServer('file://' . __DIR__ . '/../../tests/data/test-server.txt', 6667)
-            ->addOpCodeEvent(\SalernoLabs\IRC\OpCodes::IRC_END_OF_MOTD, new \SalernoLabs\Tests\IRC\Events\Mocks\OnConnect())
+            ->addOpCodeEvent(\SlzBot\IRC\OpCodes::IRC_END_OF_MOTD, new \SlzBot\Tests\IRC\Events\Mocks\OnConnect())
             ->setDebug(true);
 
         $this->expectOutputRegex('#PRIVMSG \#phpirc :Super Test Message#');

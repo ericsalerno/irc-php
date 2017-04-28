@@ -2,22 +2,22 @@
 /**
  * Command Interface for Adding Commands to the Bot
  *
- * @package SalernoLabs
+ * @package SlzBot
  * @subpackage IRC
  * @author Eric Salerno
  */
-namespace SalernoLabs\IRC\Commands;
+namespace SlzBot\IRC\Commands;
 
 interface CommandInterface
 {
     /**
      * Execute the command
      *
-     * @param \SalernoLabs\IRC\Bot $bot
-     * @param \SalernoLabs\IRC\User $user
+     * @param \SlzBot\IRC\Bot $bot
+     * @param \SlzBot\IRC\User $user
      * @param $channel
      * @param $parameters
      * @return mixed
      */
-    public function execute(\SalernoLabs\IRC\Bot $bot, \SalernoLabs\IRC\User $user, $channel, $parameters);
+    public function execute(\SlzBot\IRC\Bot $bot, \SlzBot\IRC\User $user, $channel, $parameters);
 }

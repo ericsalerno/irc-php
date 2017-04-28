@@ -2,11 +2,11 @@
 /**
  * Just an enum for constants of opcodes from the IRC RFC spec
  *
- * @package SalernoLabs
+ * @package SlzBot
  * @subpackage IRC
  * @author Eric Salerno
  */
-namespace SalernoLabs\IRC;
+namespace SlzBot\IRC;
 
 class OpCodes
 {

@@ -2,11 +2,11 @@
 /**
  * Tests for User Class
  *
- * @package SalernoLabs
+ * @package SlzBot
  * @subpackage Tests
  * @author Eric Salerno
  */
-namespace SalernoLabs\Tests\IRC;
+namespace SlzBot\Tests\IRC;
 
 class UserTest extends \PHPUnit\Framework\TestCase
 {
@@ -15,13 +15,13 @@ class UserTest extends \PHPUnit\Framework\TestCase
      *
      * @param $input
      * @param $expected
-     * @covers \SalernoLabs\IRC\User::__construct
-     * @covers \SalernoLabs\IRC\User::__toString
+     * @covers \SlzBot\IRC\User::__construct
+     * @covers \SlzBot\IRC\User::__toString
      * @dataProvider dataProviderTestUserParsing
      */
     public function testUserParsing($input, $expectedNickName, $expectedUserName, $expectedHost, $expectedIdent)
     {
-        $user = new \SalernoLabs\IRC\User($input);
+        $user = new \SlzBot\IRC\User($input);
 
         //Test individual pieces
         $this->assertEquals($expectedNickName, $user->nickName);
@@ -56,7 +56,7 @@ class UserTest extends \PHPUnit\Framework\TestCase
      */
     public function testUserParsingFailures($input)
     {
-        $user = new \SalernoLabs\IRC\User($input);
+        $user = new \SlzBot\IRC\User($input);
     }
 
     /**

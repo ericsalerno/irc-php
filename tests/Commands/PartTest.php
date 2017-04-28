@@ -2,11 +2,11 @@
 /**
  * Uptime Test
  *
- * @package SalernoLabs
+ * @package SlzBot
  * @subpackage Tests
  * @author Eric
  */
-namespace SalernoLabs\Tests\IRC\Commands;
+namespace SlzBot\Tests\IRC\Commands;
 
 class PartTest extends \PHPUnit\Framework\TestCase
 {
@@ -14,17 +14,17 @@ class PartTest extends \PHPUnit\Framework\TestCase
      * @param $nickName
      * @param $realName
      * @throws \Exception
-     * @covers \SalernoLabs\IRC\Bot::addOpCodeEvent
-     * @covers \SalernoLabs\IRC\Events\AutoJoin::execute
-     * @covers \SalernoLabs\IRC\Bot::executeEvent
+     * @covers \SlzBot\IRC\Bot::addOpCodeEvent
+     * @covers \SlzBot\IRC\Events\AutoJoin::execute
+     * @covers \SlzBot\IRC\Bot::executeEvent
      */
     public function testBotCommands()
     {
-        $bot = new \SalernoLabs\IRC\Bot();
+        $bot = new \SlzBot\IRC\Bot();
         $bot
             ->setUser('testUser', 'sausage')
             ->setServer('file://' . __DIR__ . '/../../tests/data/commands/part.txt', 6667)
-            ->addCommand('part', new \SalernoLabs\IRC\Commands\Part())
+            ->addCommand('part', new \SlzBot\IRC\Commands\Part())
             ->setDebug(true);
 
         $this->expectOutputRegex('/PART #test-channel/');

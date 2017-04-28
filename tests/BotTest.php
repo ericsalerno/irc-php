@@ -2,11 +2,11 @@
 /**
  * Bot Tests
  *
- * @package SalernoLabs
+ * @package SlzBot
  * @subpackage Tests
  * @author Eric Salerno
  */
-namespace SalernoLabs\Tests\IRC;
+namespace SlzBot\Tests\IRC;
 
 class BotTest extends \PHPUnit\Framework\TestCase
 {
@@ -14,13 +14,13 @@ class BotTest extends \PHPUnit\Framework\TestCase
      * Test the creation of a bot, connection to a server (local text file), and the commands being run against it
      *
      * @throws \Exception
-     * @covers \SalernoLabs\IRC\Bot::setServer
-     * @covers \SalernoLabs\IRC\Bot::setDebug
-     * @covers \SalernoLabs\IRC\Bot::connect
+     * @covers \SlzBot\IRC\Bot::setServer
+     * @covers \SlzBot\IRC\Bot::setDebug
+     * @covers \SlzBot\IRC\Bot::connect
      */
     public function testBotConnect()
     {
-        $bot = new \SalernoLabs\IRC\Bot();
+        $bot = new \SlzBot\IRC\Bot();
         $bot
             ->setUser('testUser', 'sausage')
             ->setServer('file://' . __DIR__ . '/../tests/data/test-server.txt', 6667)
@@ -36,15 +36,15 @@ class BotTest extends \PHPUnit\Framework\TestCase
      * Test the bot event execute
      *
      * @throws \Exception
-     * @covers \SalernoLabs\IRC\Bot::executeEvent
+     * @covers \SlzBot\IRC\Bot::executeEvent
      */
     public function testBotEventExecute()
     {
-        $bot = new \SalernoLabs\IRC\Bot();
+        $bot = new \SlzBot\IRC\Bot();
         $bot
             ->setUser('testUser', 'sausage')
             ->setServer('file://' . __DIR__ . '/../tests/data/test-server.txt', 6667)
-            ->addOpCodeEvent(\SalernoLabs\IRC\OpCodes::EVENT_READY, new Events\Mocks\OnConnect())
+            ->addOpCodeEvent(\SlzBot\IRC\OpCodes::EVENT_READY, new Events\Mocks\OnConnect())
             ->setDebug(true);
 
         $this->expectOutputRegex('#PRIVMSG \#phpirc :Super Test Message#');
@@ -57,11 +57,11 @@ class BotTest extends \PHPUnit\Framework\TestCase
      * @param $realName
      * @throws \Exception
      * @dataProvider dataProviderTestBotUser
-     * @covers \SalernoLabs\IRC\Bot::setUser
+     * @covers \SlzBot\IRC\Bot::setUser
      */
     public function testBotUser($nickName, $realName)
     {
-        $bot = new \SalernoLabs\IRC\Bot();
+        $bot = new \SlzBot\IRC\Bot();
         $bot
             ->setUser($nickName, $realName)
             ->setServer('file://' . __DIR__ . '/../tests/data/test-server.txt', 6667)

@@ -2,11 +2,11 @@
 /**
  * The main Slzbot class, you can run this directly or extend it and add event handlers.
  *
- * @package SalernoLabs
+ * @package SlzBot
  * @subpackage IRC
  * @author Eric Salerno
  */
-namespace SalernoLabs\IRC;
+namespace SlzBot\IRC;
 
 class Bot
 {
@@ -23,7 +23,7 @@ class Bot
     /**
      * In case you want to change the class of the User type
      */
-    const USER_CLASS_NAME = '\SalernoLabs\IRC\User';
+    const USER_CLASS_NAME = '\SlzBot\IRC\User';
 
     /**
      * A string to identify this client

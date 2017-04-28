@@ -14,7 +14,7 @@ Include the library in your project with composer.
 
 You can use the bot by including salernolabs/slzbot-irc with composer and activating it like this.
 
-    $bot = new \SalernoLabs\IRC\Bot();
+    $bot = new \SlzBot\IRC\Bot();
     
     $bot
         ->setServer('irc.efnet.org', 6667)
@@ -27,28 +27,28 @@ You can use the bot by including salernolabs/slzbot-irc with composer and activa
 
 You can bind and respond to events that occur from the server. You can bind multiple event executors to a single event. For example, 376 is the IRC op code for the end of the MOTD. You can bind an event to autojoin channels like this.
 
-    $autoJoins = new \SalernoLabs\IRC\Events\AutoJoin();
+    $autoJoins = new \SlzBot\IRC\Events\AutoJoin();
     $autoJoins->setAutoJoins(['#programming', '#irc', '#php']);
 
     $bot
        ->addOpCodeEvent(376, $autoJoins)
 
-There are some op codes and other events that Slzbot listens for in the \SalernoLabs\IRC\OpCodes class.
+There are some op codes and other events that Slzbot listens for in the \SlzBot\IRC\OpCodes class.
 
-The event class must implement the \SalernoLabs\IRC\Events\EventInterface interface to work so feel free to create them in your project.
+The event class must implement the \SlzBot\IRC\Events\EventInterface interface to work so feel free to create them in your project.
 
 ## Commands
 
 You can also bind commands to your bot so that it can listen for user requests. For example if a user types !uptime and you want to listen for that keyword, you can do something like this:
 
-    $command = new \SalernoLabs\IRC\Commands\Uptime();
+    $command = new \SlzBot\IRC\Commands\Uptime();
 
     $bot
         ->addCommand('uptime', $command);
 
 This would make the bot listen for users to say "!uptime" and then it would execute the code within the class. In this case it would just say how long it was since the class was instantiated.
 
-The command class must implement the \SalernoLabs\IRC\Commands\CommandInterface interface to work so feel free to create them in your project. You can also change the activation character from the default of '!' with setCommandActivationCharacter.
+The command class must implement the \SlzBot\IRC\Commands\CommandInterface interface to work so feel free to create them in your project. You can also change the activation character from the default of '!' with setCommandActivationCharacter.
 
 ## Sample
 

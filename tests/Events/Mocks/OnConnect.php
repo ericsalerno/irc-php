@@ -2,21 +2,21 @@
 /**
  * On Join Event
  *
- * @package SalernoLabs
+ * @package SlzBot
  * @subpackage Tests
  * @author Eric Salerno
  */
-namespace SalernoLabs\Tests\IRC\Events\Mocks;
+namespace SlzBot\Tests\IRC\Events\Mocks;
 
-class OnConnect implements \SalernoLabs\IRC\Events\EventInterface
+class OnConnect implements \SlzBot\IRC\Events\EventInterface
 {
     /**
      * Send a test message
      *
-     * @param \SalernoLabs\IRC\Bot $bot
+     * @param \SlzBot\IRC\Bot $bot
      * @param array $parameters
      */
-    public function execute(\SalernoLabs\IRC\Bot $bot, $parameters = [])
+    public function execute(\SlzBot\IRC\Bot $bot, $parameters = [])
     {
         $bot->sendMessage('Super Test Message', '#phpirc');
     }

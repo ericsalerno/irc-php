@@ -2,20 +2,20 @@
 /**
  * Interface for adding an event to the system
  *
- * @package SalernoLabs
+ * @package SlzBot
  * @subpackage IRC
  * @author Eric Salerno
  */
-namespace SalernoLabs\IRC\Events;
+namespace SlzBot\IRC\Events;
 
 interface EventInterface
 {
     /**
      * Execute the event
      *
-     * @param \SalernoLabs\IRC\Bot $bot
+     * @param \SlzBot\IRC\Bot $bot
      * @param array $parameters
      * @return mixed
      */
-    public function execute(\SalernoLabs\IRC\Bot $bot, $parameters = []);
+    public function execute(\SlzBot\IRC\Bot $bot, $parameters = []);
 }
