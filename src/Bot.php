@@ -449,6 +449,8 @@ class Bot
             $command = substr($command, 1);
         }
 
+        if (empty($command)) return;
+
         if ($command[0] != $this->activationCharacter) return false;
 
         //Trim off activation character
