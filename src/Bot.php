@@ -39,6 +39,11 @@ class Bot
     private $opCodeEvents = [];
 
     /**
+     * @var \SlzBot\IRC\Events\ScheduledEvent[]
+     */
+    private $scheduledEvents = [];
+
+    /**
      * Command bindings
      *
      * @var Commands\CommandInterface[]
@@ -135,6 +140,11 @@ class Bot
      * @var string
      */
     private $password = false;
+
+    /**
+     * @var bool
+     */
+    private $serverIsReady = false;
 
     /**
      * Constructor
@@ -265,6 +275,28 @@ class Bot
     }
 
     /**
+     * Add scheduled event to happen after at least timeout millseconds have passed
+     *
+     * @param $timeout
+     * @param Events\EventInterface $event
+     * @param $delay
+     * @return $this
+     * @throws \Exception
+     */
+    public function addScheduledEvent($timeout, Events\EventInterface $event, $delay = 0, $parameters = [])
+    {
+        $timeout = intval($timeout);
+        if (empty($timeout))
+        {
+            throw new \Exception("A timeout value in milliseconds is required.");
+        }
+
+        $this->scheduledEvents[] = new Events\ScheduledEvent($timeout, $event, $delay, $parameters);
+
+        return $this;
+    }
+
+    /**
      * Add command
      *
      * @param $commandText
@@ -329,6 +361,8 @@ class Bot
 
         do
         {
+            $this->checkForAndPerformScheduledEvents();
+
             $this->mainLoop();
 
             usleep(static::LOOP_SLEEP_MS * 1000);
@@ -432,6 +466,27 @@ class Bot
     }
 
     /**
+     * Check for and perform scheduled events
+     *
+     */
+    private function checkForAndPerformScheduledEvents()
+    {
+        if (!$this->serverIsReady) return;
+
+        if (empty($this->scheduledEvents)) return;
+
+        foreach ($this->scheduledEvents as $scheduledEvent)
+        {
+            $tickedEvent = $scheduledEvent->tickAndGetEventIfReady();
+
+            if (!empty($tickedEvent))
+            {
+                $tickedEvent->execute($this, $scheduledEvent->getParameters());
+            }
+        }
+    }
+
+    /**
      * By default we look for a specified command function, if not ignore it
      *
      * @param User $user
@@ -479,6 +534,11 @@ class Bot
         if (empty($this->opCodeEvents[$eventCode]))
         {
             return false;
+        }
+
+        if (!$this->serverIsReady && $eventCode == OpCodes::EVENT_READY)
+        {
+            $this->serverIsReady = true;
         }
 
         if (is_array($this->opCodeEvents[$eventCode]))
