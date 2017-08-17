@@ -352,6 +352,8 @@ class Bot
             return;
         }
 
+        stream_set_blocking($this->socket, false);
+
         $this->debugMessage("Connected! Logging in...");
 
         $this->sendRawCommand('USER', $this->nickname . ' ' . static::CLIENT_NAME . ' ' . $this->nickname . ' :' . $this->realName);
